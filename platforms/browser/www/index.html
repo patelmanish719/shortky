@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<title>Shortcut Keys of Computer</title>
+<link rel="stylesheet" href="css/w3.css">
+<link rel="stylesheet" href="css/w3-theme-teal.css">
+<script src="js/jquery.min.js"></script>
+<body style="max-width:1000px">
+
+<nav class="w3-sidebar w3-bar-block w3-card" id="mySidebar">
+
+</nav>
+
+<header class="w3-bar w3-card w3-theme">
+ 
+</header>
+
+<div class="w3-container">
+ <br/>
+ <div id="content"></div>
+</div>
+
+<footer class="w3-container w3-theme w3-margin-top">
+  
+</footer>
+
+<script>
+closeSidebar();
+function openSidebar() {
+    document.getElementById("mySidebar").style.display = "block";
+}
+function closeSidebar() {
+    document.getElementById("mySidebar").style.display = "none";
+}
+</script>
+
+<script>
+$(function(){
+  $('.w3-container').click(function(e){
+   closeSidebar();
+});
+
+
+  $("nav").load("side-panel.html");
+  $("header").load("header.html");
+  $("footer").load("footer.html");
+  $("#content").load("home.html");
+
+  // load indivisual page
+  $( "body" ).on( "click", ".detail",function() {
+     var pageName = $(this).attr('pageName');
+     var title = $(this).find('.title').html();
+       $("#content").load(pageName, function() {
+       $("#mainMenu").css("display","none");
+       $("#backBtn").show();
+       $('html,body').scrollTop(0);
+     });
+     //$("#mainTitle").hide();
+     //$("#contentTitle").show();
+     //$("#contentTitle").html(title);
+  });
+
+  // back button code
+  $( "body" ).on( "click", "#backBtn",function() {
+     $("#content").load("home.html");
+     $("#mainMenu").show();
+     $("#backBtn").hide();
+     //$("#contentTitle").hide();
+     //$("#mainTitle").show();
+  });
+
+  // home link
+  $( "body" ).on( "click", ".home",function() {
+     var pageName = $(this).attr('pageName'); 
+     $("#content").load(pageName, function() {
+       $('html,body').scrollTop(0);
+       $("#mainMenu").show();
+       $("#backBtn").hide();
+     });
+  });
+
+  // feedback link
+  $( "body" ).on( "click", ".feedback",function() {
+     var pageName = $(this).attr('pageName');
+     var title = $(this).find('.title').html();
+       $("#content").load(pageName, function() {
+       $('html,body').scrollTop(0);
+     });
+  });
+
+  // Send Feedback
+  $( "body" ).on( "click", "#send",function() {
+     var appName = "Betal";
+     var name = $.trim($("input[name='name']").val());
+     var msg = $.trim($("textarea[name='msg']").val());
+     var email = $.trim($("input[name='email']").val());
+     var phone = $.trim($("input[name='phone']").val());
+      if(name=="") {
+         alert("Please Enter Your Full Name");
+         $("input[name='name']").focus();
+         return false;
+        }
+        if(msg=="") {
+         alert("Please Enter Your Message");
+         $("textarea[name='msg']").focus();
+         return false;
+        }
+        if(email=="") {
+         alert("Please Enter Your Email");
+         $("input[name='email']").focus();
+         return false;
+        }
+
+     $("#send").hide();
+     $("#sendMsg").show();   
+     $.ajax({
+        url: "https://datagemba.com/pages/send",
+        method: "POST",
+        dataType:'json',
+        data: { appName:appName, name : name, email:email, phone:phone,msg:msg },
+        crossDomain: true,
+        success:function(result) {
+         if(result==1) {
+          alert("Message Sent Successfully.. Thank You.");
+         }
+         $("#send").show();
+         $("#sendMsg").hide();
+         $("input").val("");
+         $("textarea").val("");
+        },
+        error: function() {
+         alert("Error to send message, Please try again.");
+         $("#send").show();
+         $("#sendMsg").hide();
+        },
+        timeout:30000
+     });
+     return false;
+  });
+
+
+
+  
+
+
+
+});
+
+</script>
+
+
+
+
+</body>

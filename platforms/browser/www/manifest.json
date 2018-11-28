@@ -1,0 +1,11 @@
+{
+  "background_color": "#FFF",
+  "display": "standalone",
+  "name": "Shortcut Keys of Computer",
+  "short_name": "Shortcut Keys of Computer",
+  "version": "org.shortcuts.appx",
+  "description": "Complete information of all computer shortcut keys.",
+  "author": "Manish Patel",
+  "icons": [],
+  "start_url": "index.html"
+}
